@@ -1,0 +1,17 @@
+.categoryCard {
+  width: 15.4vw;
+  height: 35vh;
+  border: none;
+  border-radius: 10px;
+  background-blend-mode: normal, normal, screen, overlay, normal;
+  background-position: center top; /* Adjust the position to show the top portion */
+  box-shadow: 0px 0px 3px 1px white;
+  overflow: hidden;
+  margin: 1% 0;
+  margin-left: 3.65%;
+  cursor: pointer;
+}
+.categoryCard img {
+  max-width: 100%;
+  max-height: 100%;
+}
