@@ -1,0 +1,26 @@
+.searchCard {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1vmax;
+  margin-right: 2vmax;
+}
+.searchCard span:first-child {
+  font-size: 16px;
+  margin: 0.7vmax 0;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+  justify-content: center;
+  line-height: 1.25;
+  color: rgb(248, 68, 100);
+  text-overflow: ellipsis;
+}
+.searchCard span:last-child {
+  font-size: 14px;
+  white-space: nowrap;
+  font-weight: normal;
+  color: rgb(102, 102, 102);
+  line-height: 1.43;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

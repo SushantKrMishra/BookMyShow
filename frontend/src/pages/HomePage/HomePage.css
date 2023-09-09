@@ -1,0 +1,21 @@
+.recommendedMovies {
+  display: flex;
+  margin-bottom: 2vh;
+  margin-left: 1vh;
+}
+.categorySection {
+  display: flex;
+  margin-bottom: 1vh;
+}
+.streamingEvents {
+  display: flex;
+  margin-bottom: 2vh;
+}
+.popularEvents {
+  display: flex;
+  margin-bottom: 2vh;
+}
+.trendingSearch {
+  display: flex;
+  padding-left: 3.65%;
+}
