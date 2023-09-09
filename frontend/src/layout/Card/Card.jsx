@@ -35,7 +35,7 @@ const Card = ({ imageLink, imageAlt, movieName = " ", category = " " }) => {
       onClick={handleCardClick}
     >
       <div className="card">
-        <img src={imageLink} alt={imageAlt} width="100%" height="100%" />
+        <img src={imageLink} alt={imageAlt} />
       </div>
       <div className="cardDescription">
         <span>{movieName}</span>
