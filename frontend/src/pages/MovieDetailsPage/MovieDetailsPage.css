@@ -74,6 +74,7 @@
   line-height: 24px;
   white-space: nowrap;
   overflow: hidden;
+  cursor: pointer;
 }
 .left-image img {
   border-radius: 7px;
@@ -143,4 +144,5 @@
   margin: 20px;
   color: white;
   padding: 1vmax 3vmax;
+  cursor: pointer;
 }

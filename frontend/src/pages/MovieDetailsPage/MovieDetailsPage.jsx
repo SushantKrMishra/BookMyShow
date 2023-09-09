@@ -5,7 +5,9 @@ import SectionHeading from "../../components/SectionHeading";
 import CastCard from "../../layout/CastCard/CastCard";
 import Card from "../../layout/Card/Card";
 import Footer from "../../components/Footer/Footer";
+import { useNavigate, useParams } from "react-router-dom";
 const MovieDetailsPage = () => {
+  const {movieName}=useParams();
   const divStyle = {
     background: `linear-gradient(90deg, rgb(26, 26, 26) 24.97%, rgb(26, 26, 26) 38.3%, rgba(26, 26, 26, 0.04) 97.47%, rgb(26, 26, 26) 100%), url('https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/jawan-et00330424-1692248611.jpg')`,
     backgroundSize: "cover",
@@ -15,6 +17,7 @@ const MovieDetailsPage = () => {
     alignItems: "center",
     color: "white",
   };
+  const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -42,8 +45,8 @@ const MovieDetailsPage = () => {
       <Header />
       {showVirtualHeader && (
         <div className="virtual-header">
-          <h1>Movie Title</h1>
-          <div>Book tickets</div>
+          <h1>{movieName}</h1>
+          <div onClick={() => navigate(`/buytickets/${movieName}`)}>Book tickets</div>
         </div>
       )}
       <div style={divStyle}>
@@ -55,7 +58,7 @@ const MovieDetailsPage = () => {
             />
           </div>
           <div className="left-content">
-            <h1>Movie Title</h1>
+            <h1>{movieName}</h1>
             <span className="movieInterestCount">
               <span>
                 <svg
@@ -87,7 +90,12 @@ const MovieDetailsPage = () => {
               <span> • </span>
               <span>UA</span>
             </div>
-            <div className="bookButton">Book tickets</div>
+            <div
+              className="bookButton"
+              onClick={() => navigate(`/buytickets/${movieName}`)}
+            >
+              Book tickets
+            </div>
           </div>
         </div>
 

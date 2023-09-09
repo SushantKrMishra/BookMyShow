@@ -7,7 +7,7 @@ const Card = ({ imageLink, imageAlt, movieName = " ", category = " " }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleCardClick = () => {
-    navigate("/movie/:id");
+    navigate(`/movie/${movieName}/:id`);
     window.scrollTo(0, 0);
   };
 

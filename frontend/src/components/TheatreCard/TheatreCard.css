@@ -1,0 +1,38 @@
+.theatreCard {
+  display: flex;
+  gap: 17vmax;
+  align-items: center;
+  height: 20vh;
+}
+.theatreCard > div:nth-child(2) {
+  display: flex;
+  margin-right: 5vmax;
+  margin-left: -9vmax;
+  cursor: pointer;
+}
+.theatreCard > div:last-child {
+  display: flex;
+  gap: 2vmax;
+}
+.theatreCard > div:last-child > span {
+  border: 1px solid #b2b2b2ff;
+  padding: 1.5vmax;
+  border-radius: 5%;
+  color: #68c878ff;
+  cursor: pointer;
+}
+.theatreCard > div:last-child > span:hover {
+  border: 1px solid #f84464ff;
+}
+.infoIcon {
+  width: 1.5rem;
+}
+.theatreCard > div:first-child {
+  font-size: 1.5vmax;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 3.65%;
+}
+.theatreCard > div:first-child:hover {
+  text-decoration: underline;
+}

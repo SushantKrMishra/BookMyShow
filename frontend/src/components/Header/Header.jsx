@@ -256,16 +256,23 @@ const Header = () => {
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   marginTop: "10px",
+                  gap: "10px",
                 }}
               >
-                <Typography variant="body2" style={{ marginRight: "10px" }}>
-                  +91
-                </Typography>
                 <TextField
                   variant="outlined"
-                  placeholder="Enter your mobile number"
+                  placeholder="yourEmail@email.com"
+                  fullWidth
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                />
+
+                <TextField
+                  variant="outlined"
+                  placeholder="Password"
                   fullWidth
                   value={number}
                   onChange={(e) => setNumber(e.target.value)}
@@ -278,7 +285,7 @@ const Header = () => {
                   backgroundColor: "#f84464",
                   marginTop: "10px",
                   width: "100%",
-                  textAlign: "center", // Center-align the button text
+                  textAlign: "center", 
                 }}
               >
                 Login
@@ -293,6 +300,15 @@ const Header = () => {
               <Link href="#" color="textSecondary">
                 Privacy Policy
               </Link>
+            </Typography>
+            <Typography
+              variant="body2"
+              style={{ textAlign: "center", marginTop: "1vmax", color: "grey" }}
+            >
+              Didn't have account?{" "}
+              <span style={{ color: "#f84464", cursor: "pointer" }}>
+                Sign Up
+              </span>
             </Typography>
           </div>
         </DialogContent>
