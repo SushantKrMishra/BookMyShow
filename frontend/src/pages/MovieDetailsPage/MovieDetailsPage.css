@@ -79,7 +79,9 @@
 .left-image img {
   border-radius: 7px;
   object-fit: cover;
+  padding-right: 1.1vmax;
   height: 100%;
+  width: auto;
 }
 .contentInformation-left {
   padding-left: 5vmax;

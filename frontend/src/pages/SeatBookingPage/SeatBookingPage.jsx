@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SeatBookingPage.css";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -364,6 +364,11 @@ const SeatBookingPage = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
   const navigate = useNavigate();
   const toggleSeat = (seatId) => {
+    const isSeatBooked = seats.find((seat) => seat.id === seatId)?.isBooked;
+    if (isSeatBooked) {
+      alert("This seat is already booked.");
+      return;
+    }
     const isSeatSelected = selectedSeats.includes(seatId);
 
     if (isSeatSelected) {
@@ -383,6 +388,9 @@ const SeatBookingPage = () => {
       }
     );
   };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <div className="header-seatBooking">
