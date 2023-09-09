@@ -7,12 +7,12 @@ import Card from "../../layout/Card/Card";
 import Footer from "../../components/Footer/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 const MovieDetailsPage = () => {
-  const {movieName}=useParams();
+  const { movieName } = useParams();
   const divStyle = {
     background: `linear-gradient(90deg, rgb(26, 26, 26) 24.97%, rgb(26, 26, 26) 38.3%, rgba(26, 26, 26, 0.04) 97.47%, rgb(26, 26, 26) 100%), url('https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/jawan-et00330424-1692248611.jpg')`,
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    height: "80vh",
+    height: "65%",
     display: "flex",
     alignItems: "center",
     color: "white",
@@ -46,7 +46,9 @@ const MovieDetailsPage = () => {
       {showVirtualHeader && (
         <div className="virtual-header">
           <h1>{movieName}</h1>
-          <div onClick={() => navigate(`/buytickets/${movieName}`)}>Book tickets</div>
+          <div onClick={() => navigate(`/buytickets/${movieName}`)}>
+            Book tickets
+          </div>
         </div>
       )}
       <div style={divStyle}>
