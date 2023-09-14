@@ -4,7 +4,7 @@
   justify-content: space-between;
   padding: 0 60px;
   height: 70px;
-  align-items: center;
+  align-items: center;position: relative;
 }
 .searchBar {
   display: flex;
@@ -52,6 +52,12 @@
   margin-left: -10px;
   cursor: pointer;
 }
+.userNameDisplay{
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255);
+  width: 19%;
+  padding: 1% 1%;
+}
 .authButton > span {
   color: rgb(255, 255, 255);
   background-color: rgb(248, 68, 100);
@@ -90,4 +96,39 @@
   margin: 10px;
   opacity: 0.8;
   font-weight: 400;
+}
+.menuButton {
+  color: white;
+  cursor: pointer;
+}.menuContainer {
+  position: absolute;
+  top: 70px; /* Position the menu below the header */
+  right: 10px;
+  z-index: 100; /* Ensure the menu is above other content */
+  background-color: white;
+  width: 200px;
+  border-radius: 5px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  text-align: center;
+  display: none; /* Initially hidden */
+}
+
+.menuContainer.open {
+  display: block; /* Show the menu when it's open */
+}
+
+.menuOption {
+  color: #333545;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menuOption:hover {
+  background-color: rgb(248, 68, 100);
 }

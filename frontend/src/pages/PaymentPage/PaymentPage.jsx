@@ -119,6 +119,9 @@ const PaymentPage = () => {
     selectedCategory === "All"
       ? mealItems
       : mealItems.filter((item) => item.category === selectedCategory);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
       <Dialog open={open} onClose={handleDialogBox}>
