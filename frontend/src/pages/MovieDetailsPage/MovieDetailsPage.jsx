@@ -194,24 +194,24 @@ const MovieDetailsPage = () => {
                 movieName="Jailer"
               />
               <Card
-                imageLink="https://assets-in.bmscdn.com/iedb/movies/images/website/poster/large/jailer-et00331686-1664432415.jpg"
+                imageLink="https://assets-in.bmscdn.com/iedb/movies/images/website/poster/large/jawan-et00330424-1693892482.jpg"
                 imageAlt="Jailer"
-                movieName="Jailer"
+                movieName="Jawan"
               />
               <Card
-                imageLink="https://assets-in.bmscdn.com/iedb/movies/images/website/poster/large/jailer-et00331686-1664432415.jpg"
+                imageLink="https://assets-in.bmscdn.com/iedb/movies/images/website/poster/large/omg-2-et00361712-1689772587.jpg"
                 imageAlt="Jailer"
-                movieName="Jailer"
+                movieName="OMG 2"
               />
               <Card
-                imageLink="https://assets-in.bmscdn.com/iedb/movies/images/website/poster/large/jailer-et00331686-1664432415.jpg"
+                imageLink="https://assets-in.bmscdn.com/iedb/movies/images/website/poster/large/antaryatri-mahapurus-the-walking-god-et00318297-23-11-2021-03-27-57.jpg"
                 imageAlt="Jailer"
-                movieName="Jailer"
+                movieName="Antaryatri Mahapurush"
               />
               <Card
-                imageLink="https://assets-in.bmscdn.com/iedb/movies/images/website/poster/large/jailer-et00331686-1664432415.jpg"
+                imageLink="https://assets-in.bmscdn.com/iedb/movies/images/website/poster/large/the-nun-ii-et00363916-1688719096.jpg"
                 imageAlt="Jailer"
-                movieName="Jailer"
+                movieName="The Nun"
               />
             </div>
           </div>
