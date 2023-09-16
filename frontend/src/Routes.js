@@ -6,6 +6,7 @@ import PaymentPage from "./pages/PaymentPage/PaymentPage";
 import SignUpPage from "./pages/SignUpPage/SignUp";
 import AddMovie from "./pages/AdminPage/AddMovie.jsx";
 import AddTheatre from "./pages/AdminPage/AddTheatre.jsx";
+import AddShow from "./pages/AdminPage/AddShow.jsx";
 import CustomerSupport from "./pages/CustomerSupportPage/CustomerSupport.jsx";
 export {
   HomePage,
@@ -17,4 +18,5 @@ export {
   AddMovie,
   AddTheatre,
   CustomerSupport,
+  AddShow,
 };

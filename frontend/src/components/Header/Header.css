@@ -4,7 +4,8 @@
   justify-content: space-between;
   padding: 0 60px;
   height: 70px;
-  align-items: center;position: relative;
+  align-items: center;
+  position: relative;
 }
 .searchBar {
   display: flex;
@@ -52,11 +53,15 @@
   margin-left: -10px;
   cursor: pointer;
 }
-.userNameDisplay{
+.userNameDisplay {
   color: rgb(255, 255, 255);
   border: 1px solid rgb(255, 255, 255);
-  width: 19%;
-  padding: 1% 1%;
+  width: 17%;
+  padding: 1%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 .authButton > span {
   color: rgb(255, 255, 255);
@@ -100,7 +105,8 @@
 .menuButton {
   color: white;
   cursor: pointer;
-}.menuContainer {
+}
+.menuContainer {
   position: absolute;
   top: 70px; /* Position the menu below the header */
   right: 10px;

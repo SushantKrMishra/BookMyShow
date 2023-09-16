@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Header from "../../components/Header/Header";
 import axios from "axios";
+import { useSelector } from "react-redux";
 const AddTheatre = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -20,8 +21,8 @@ const AddTheatre = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY5NDcxNDcyMSwiZXhwIjoxNjk0NzE2NTIxfQ.iDVHXQ7GGJ4auFwWvNhsojdwlaPp6a9Ij5FX7GjNi0k";
+  const token =useSelector((state) => state.auth.user.token)
+
   const handleAddTheatre = () => {
     const headers = {
       Authorization: `Bearer ${token}`,

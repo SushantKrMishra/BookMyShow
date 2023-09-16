@@ -1,12 +1,12 @@
 .castCard img {
   border-radius: 50%;
-  width: 60%;
+  width: 9rem;
   padding-bottom: 2px;
 }
 .castCard {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;margin-right: 3%
 }
 .castCard span:first-child {
   overflow: hidden;

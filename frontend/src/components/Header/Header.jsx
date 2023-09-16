@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import {
   Dialog,
   DialogTitle,
@@ -26,7 +26,7 @@ const location = [
   },
   {
     link: "https://in.bmscdn.com/m6/images/common-modules/regions/ncr.png",
-    name: "NCR",
+    name: "Delhi",
   },
   {
     link: "https://in.bmscdn.com/m6/images/common-modules/regions/bang.png",
@@ -71,13 +71,15 @@ const Header = () => {
     username: "",
     password: "",
   });
+  const { pathname } = useLocation();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state?.auth?.user?.user);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
   const navigate = useNavigate();
+  
   const handleCityClick = () => {
     setDialogOpen(true);
   };
@@ -101,6 +103,20 @@ const Header = () => {
     setAuthDialogOpen(false);
   };
 
+  const { movieName } = useParams();
+  useEffect(() => {
+    if (pathname.includes("/buytickets/")) {
+      setDialogOpen(true);
+      if (selectedLocation) {
+        const payload = {
+          city: selectedLocation ? selectedLocation?.name : "Delhi",
+          name: movieName,
+        };
+        navigate(`/buytickets/${movieName}`, { state: { payload } });
+        setDialogOpen(false);
+      }
+    }
+  }, [pathname, selectedLocation]);
   return (
     <>
       <div className="header">
@@ -163,7 +179,7 @@ const Header = () => {
         </div>
         {isAuthenticated ? (
           <div className="userNameDisplay">
-            <span>welcome {user.name} !</span>
+            <span>Hi, {user.name} !</span>
           </div>
         ) : (
           <div className="authButton" onClick={handleLoginDialog}>
@@ -200,19 +216,26 @@ const Header = () => {
                   <div
                     className="menuOption"
                     onClick={() => {
-                      navigate('/addMovie_admin')
+                      navigate("/addMovie_admin");
                     }}
-                    >
+                  >
                     Add Movie
                   </div>
                   <div
                     className="menuOption"
                     onClick={() => {
-                      navigate('/addTheatre_admin')
-
+                      navigate("/addTheatre_admin");
                     }}
                   >
                     Add Theatre
+                  </div>
+                  <div
+                    className="menuOption"
+                    onClick={() => {
+                      navigate("/addShow_admin");
+                    }}
+                  >
+                    Add Show
                   </div>
                 </>
               ) : null}

@@ -12,12 +12,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import FoodCard from "../../layout/FoodCard/FoodCard";
 const PaymentPage = () => {
   const [open, setOpen] = useState(true);
-  const { selectedSeats } = useLocation().state || {};
+  const { selectedSeats, price, id } = useLocation().state;
   const [selectedFoodItems, setSelectedFoodItems] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
-    const ticketPrice = selectedSeats.length * 400;
+    const ticketPrice = selectedSeats.length * price;
     const convenienceFees = 58;
     const foodItemsTotal = Object.values(selectedFoodItems).reduce(
       (total, selectedItem) =>
@@ -28,7 +28,7 @@ const PaymentPage = () => {
     const newTotalPrice = ticketPrice + convenienceFees + foodItemsTotal;
 
     setTotalPrice(newTotalPrice);
-  }, [selectedSeats, selectedFoodItems]);
+  }, [selectedSeats, selectedFoodItems,price]);
   const handleAddToBill = (foodItem, quantity) => {
     setSelectedFoodItems((prevItems) => {
       const updatedItems = { ...prevItems };
@@ -316,14 +316,14 @@ const PaymentPage = () => {
             <div>
               Ticket Price :
               <span>
-                ₹{selectedSeats.length * 400} ({selectedSeats.length} Ticket)
+                ₹{selectedSeats.length * price} ({selectedSeats.length} Ticket)
               </span>
             </div>
             <div>
               Convenience fees : <span>₹ 58</span>
             </div>
             <div>
-              Sub Total : <span>₹ {selectedSeats.length * 400 + 58}</span>
+              Sub Total : <span>₹ {selectedSeats.length * price + 58}</span>
             </div>
             <div className="selectedFoodItem-container">
               {Object.keys(selectedFoodItems).length > 0 && (

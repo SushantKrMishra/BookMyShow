@@ -2,29 +2,27 @@ import React, { useState } from "react";
 import "./TheatreCard.css";
 import TheatreInfoDialog from "./TheatreInfo.jsx";
 import { useNavigate } from "react-router-dom";
-const TheatreCard = ({
-  theatreName,
-  theatreAddress,
-  theatreAmenities,
-  movieName,
-  selectedDate,
-}) => {
+const TheatreCard = ({ theater }) => {
+  const theatreAmenities = ["Parking", "Concessions", "Restrooms"];
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
+
   const openDialog = () => {
     setIsDialogOpen(true);
   };
-  const handleClick = (time) => {
+  const handleClick = (time, id, price) => {
     navigate(
-      `/buytickets/${movieName}/${theatreName}/${selectedDate}/${time}/seatbooking`
+      `/buytickets/${theater?.movie?.name}/${theater?.theater?.name}/${theater.showDate[0]}-${theater.showDate[1]}-${theater.showDate[2]}/${time}/seatbooking`,
+      { state: { id, price, time } }
     );
   };
+  
   const closeDialog = () => {
     setIsDialogOpen(false);
   };
   return (
     <div className="theatreCard">
-      <div>{theatreName}</div>
+      <div>{theater?.theater?.name}</div>
       <div onClick={openDialog}>
         <span>
           <svg
@@ -45,17 +43,35 @@ const TheatreCard = ({
         <span>info</span>
       </div>
       <div>
-        <span onClick={() => handleClick("09-00-AM")}>09:00 AM</span>
-        <span onClick={() => handleClick("12-00-PM")}>12:00 PM</span>
-        <span onClick={() => handleClick("03-00-PM")}>03:00 PM</span>
-        <span onClick={() => handleClick("06-00-PM")}>06:00 PM</span>
-        <span onClick={() => handleClick("09-00-PM")}>09:00 PM</span>
+        {theater &&
+          theater?.showTime?.map((item, index) => {
+            if (index % 2 === 0) {
+              const time = `${theater.showTime[index]}:${
+                theater.showTime[index + 1]
+              }`;
+              return (
+                <span
+                  onClick={() => {
+                    handleClick(
+                      time,
+                      theater.showIds[index / 2],
+                      theater.price[index / 2]
+                    );
+                  }}
+                >
+                  {time}
+                </span>
+              );
+            } else {
+              return null;
+            }
+          })}
       </div>
       <TheatreInfoDialog
         isOpen={isDialogOpen}
         onClose={closeDialog}
-        theatreName={theatreName}
-        address={theatreAddress}
+        theatreName={theater?.theater?.name}
+        address={theater?.theater?.address}
         amenities={theatreAmenities}
       />
     </div>
