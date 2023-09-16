@@ -13,7 +13,7 @@ const MovieDetailsPage = () => {
     background: `linear-gradient(90deg, rgb(26, 26, 26) 24.97%, rgb(26, 26, 26) 38.3%, rgba(26, 26, 26, 0.04) 97.47%, rgb(26, 26, 26) 100%), url(${movieData?.bannerImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    height: "65%",
+    height: "600px",
     display: "flex",
     alignItems: "center",
     color: "white",
@@ -33,34 +33,34 @@ const MovieDetailsPage = () => {
   }, []);
   const recommendedMovies = [
     {
-      aboutTheMovie:
-        "Muthuvel Pandian is a strict yet empathetic jailer who must stop a gang from trying to rescue their leader from prison.",
-      bannerImage:
-        "https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/jailer-et00331686-1664432415.jpg",
-      cast: "Rajinikanth,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/rajinikanth-1795-29-12-2016-01-58-24.jpg|MohanLal,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/mohanlal-1502-24-03-2017-12-30-59.jpg|Ramya Krishnan,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/ramya-krishnan-2920-18-09-2017-05-34-55.jpg",
-      category: " Action , Drama , Thriller",
-      crew: "Nelson DilipKumar,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/nelson-dilipkumar-1090825-14-08-2018-11-45-27.jpg|Kalnithi Maran,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/kalanidhi-maran-2016384-1649249086.jpg",
-      duration: 2.0,
-      howManyInterested: "397",
+      name: "Shubh Still Rollin Tour by TI LIVE - Delhi(NCR)",
       image:
-        "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/jailer-et00331686-1664432415.jpg",
-      name: "Jailer",
+        "https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U2F0LCAzMCBTZXA%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00364993-dykdbfbjzm-portrait.jpg",
+      bannerImage:
+        "https://assets-in.bmscdn.com/nmcms/events/banner/desktop/media-desktop-shubh-still-rollin-tour-by-ti-live-delhi-ncr-0-2023-9-8-t-13-51-30.jpg",
       releasedate: "2023-09-12T09:39:54.258Z",
+      duration: 5,
+      category: "Outdoor Events",
+      howManyInterested: "1,234",
+      aboutTheMovie:
+        "India, brace yourselves for a homecoming like no other! Shubh, the blazing Punjabi Rapper, is set to ignite stages across the nation, bridging continents with his unmatched musical prowess! #ShubhHomecoming #PunjabiRapper #IndiaTour2023",
+      cast: "Shubh,https://assets-in.bmscdn.com/nmcms/media-base-bollyboom-arena-ft-shubh-gurgaon-2023-8-2-t-8-46-33.jpeg|,|,",
+      crew: ",|,",
     },
     {
-      aboutTheMovie:
-        "Muthuvel Pandian is a strict yet empathetic jailer who must stop a gang from trying to rescue their leader from prison.",
-      bannerImage:
-        "https://assets-in.bmscdn.com/iedb/movies/images/mobile/listing/xxlarge/jailer-et00331686-1664432415.jpg",
-      cast: "Rajinikanth,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/rajinikanth-1795-29-12-2016-01-58-24.jpg|MohanLal,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/mohanlal-1502-24-03-2017-12-30-59.jpg|Ramya Krishnan,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/ramya-krishnan-2920-18-09-2017-05-34-55.jpg",
-      category: " Action , Drama , Thriller",
-      crew: "Nelson DilipKumar,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/nelson-dilipkumar-1090825-14-08-2018-11-45-27.jpg|Kalnithi Maran,https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/kalanidhi-maran-2016384-1649249086.jpg",
-      duration: 2.0,
-      howManyInterested: "397",
+      name: "Navratri Utsav with Falguni Pathak 2023",
       image:
-        "https://assets-in.bmscdn.com/iedb/movies/images/mobile/thumbnail/xlarge/jailer-et00331686-1664432415.jpg",
-      name: "Jailer",
-      releasedate: "2023-09-12T09:39:54.258Z",
+        "https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAxNSBPY3Qgb253YXJkcw%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00368277-ekctzfrkks-portrait.jpg",
+      bannerImage:
+        "https://assets-in.bmscdn.com/nmcms/events/banner/desktop/media-desktop-navratri-utsav-with-falguni-pathak-2023-0-2023-8-29-t-11-2-24.jpg",
+      releasedate: "2023-10-23T09:39:54.258Z",
+      duration: 3,
+      category: "Outdoor Events",
+      howManyInterested: "10.9K",
+      aboutTheMovie:
+        "Falguni Pathak is synonymous with Navratri. She is regarded as the queen of garba and has been performing in Mumbai for many years. You can dance to her tunes at the Navratri Utsav with Falguni Pathak 2023 organised by Showglits Events and Entertainment Pvt Ltd. This event will be held at the Late Shri Pramod Mahajan Sports Complex in Chikuwadi, Borivali - West. Come join us with the Garba Queen Falguni Pathak and experience a breath-taking Navratri. With the biggest Navratri play ground, mega stage and sound, experience the thrill of dancing into the tunes of none other than the queen of Garba Falguni Pathak and Ta Thaiya.",
+      cast: "Falguni Pathak,|,|,",
+      crew: ",|,",
     },
     {
       aboutTheMovie:

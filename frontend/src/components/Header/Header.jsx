@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import {
   Dialog,
   DialogTitle,
@@ -26,7 +26,7 @@ const location = [
   },
   {
     link: "https://in.bmscdn.com/m6/images/common-modules/regions/ncr.png",
-    name: "NCR",
+    name: "Delhi",
   },
   {
     link: "https://in.bmscdn.com/m6/images/common-modules/regions/bang.png",
@@ -79,6 +79,7 @@ const Header = () => {
     setFormData({ ...formData, [name]: value });
   };
   const navigate = useNavigate();
+  
   const handleCityClick = () => {
     setDialogOpen(true);
   };
@@ -101,11 +102,21 @@ const Header = () => {
     alert("Login successful");
     setAuthDialogOpen(false);
   };
+
+  const { movieName } = useParams();
   useEffect(() => {
     if (pathname.includes("/buytickets/")) {
       setDialogOpen(true);
+      if (selectedLocation) {
+        const payload = {
+          city: selectedLocation ? selectedLocation?.name : "Delhi",
+          name: movieName,
+        };
+        navigate(`/buytickets/${movieName}`, { state: { payload } });
+        setDialogOpen(false);
+      }
     }
-  }, [pathname]);
+  }, [pathname, selectedLocation]);
   return (
     <>
       <div className="header">
@@ -217,6 +228,14 @@ const Header = () => {
                     }}
                   >
                     Add Theatre
+                  </div>
+                  <div
+                    className="menuOption"
+                    onClick={() => {
+                      navigate("/addShow_admin");
+                    }}
+                  >
+                    Add Show
                   </div>
                 </>
               ) : null}

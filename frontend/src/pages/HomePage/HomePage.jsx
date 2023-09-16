@@ -21,8 +21,6 @@ const HomePage = () => {
         console.error(error);
       });
   }, []);
-
-  console.log(allMovies);
   return (
     <div>
       <Header />

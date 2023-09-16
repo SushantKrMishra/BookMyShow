@@ -7,7 +7,7 @@ const Card = ({ movieData }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleCardClick = () => {
-    navigate(`/movie/${movieData.name}`,{ state: { movieData } });
+    navigate(`/movie/${movieData.name}`, { state: { movieData } });
     window.scrollTo(0, 0);
   };
 
@@ -30,16 +30,18 @@ const Card = ({ movieData }) => {
   }, []);
 
   return (
-    <div
-      className={`mainCard ${isVisible ? "fade-in visible" : "fade-in"}`}
-      onClick={handleCardClick}
-    >
-      <div className="card">
-        <img src={movieData?.image} alt={movieData?.name} />
-      </div>
-      <div className="cardDescription">
-        <span>{movieData?.name}</span>
-        <span>{movieData?.category}</span>
+    <div className="cardContainer-main">
+      <div
+        className={`mainCard ${isVisible ? "fade-in visible" : "fade-in"}`}
+        onClick={handleCardClick}
+      >
+        <div className="card">
+          <img src={movieData?.image} alt={movieData?.name} />
+        </div>
+        <div className="cardDescription">
+          <span>{movieData?.name}</span>
+          <span>{movieData?.category}</span>
+        </div>
       </div>
     </div>
   );

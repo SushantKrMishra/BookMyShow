@@ -4,17 +4,88 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Select from "react-select";
 import TheatreCard from "../../components/TheatreCard/TheatreCard";
-import { useParams } from "react-router-dom";
-
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 const BuyTicketsPage = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDropDownOption, setSelectedDropDownOption] = useState(null);
   const [dateOptions, setDateOptions] = useState([]);
+  const [theaters, setTheaters] = useState([]);
+  const { payload } = useLocation().state || {};
   const dropdownOptions = [
     { value: "Hindi", label: "Hindi" },
     { value: "English", label: "English" },
   ];
   const { movieName } = useParams();
+  const selectedDate = selectedOption
+    ? selectedOption.value
+    : new Date().toISOString();
+  function groupTheatersAndShows(data) {
+    const theatersByName = {};
+
+    data.forEach((show) => {
+      const theaterName = show.theater.name;
+      const showId = show.id;
+
+      if (!theatersByName[theaterName]) {
+        theatersByName[theaterName] = {
+          name: theaterName,
+          showTime: [],
+          price: [],
+          showDate: [],
+          movie: {},
+          theater: {},
+          showIds: [], 
+        };
+      }
+
+      theatersByName[theaterName].showTime.push(...show.showTime);
+      theatersByName[theaterName].price.push(show.price);
+      theatersByName[theaterName].showDate = show.showDate;
+      theatersByName[theaterName].movie = show.movie;
+      theatersByName[theaterName].theater = show.theater;
+      theatersByName[theaterName].showIds.push(showId); 
+    });
+
+    return Object.values(theatersByName);
+  }
+
+  const fetchTheatresbyCity = () => {
+    axios
+      .get(
+        `http://16.171.225.190:8080/show/Get_By_City?city=${payload?.city}&movieName=${movieName}`,
+        { payload }
+      )
+      .then((response) => {
+        const groupedTheaters = groupTheatersAndShows(response.data);
+        setTheaters(groupedTheaters);
+      })
+      .catch((error) => {
+        console.error("Error fetching theaters:", error);
+      });
+  };
+  const fetchTheatresByDate = () => {
+    axios
+      .get(
+        `http://16.171.225.190:8080/show/Get_By_Date?city=${payload?.city}&movieName=${movieName}&ShowDate=${date_show}`,
+        {
+          city: payload?.city,
+          movieName: payload?.movieName,
+          ShowDate: date_show,
+        }
+      )
+      .then((response) => {
+        const groupedTheaters = groupTheatersAndShows(response.data);
+        setTheaters(groupedTheaters);
+      })
+      .catch((error) => {
+        console.error("Error fetching theaters:", error);
+      });
+  };
+  useEffect(() => {
+    fetchTheatresbyCity();
+  }, [payload]);
+
   useEffect(() => {
     const today = new Date();
     const dateOptions = [];
@@ -31,10 +102,12 @@ const BuyTicketsPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const selectedDate = selectedOption
-    ? selectedOption.value
-    : new Date().toISOString();
+  useEffect(() => {
+    fetchTheatresByDate();
+  }, [selectedOption]);
 
+  const dateParts = selectedDate.split("T");
+  const date_show = dateParts[0];
   return (
     <div className="buyTicketsPage">
       <Header />
@@ -64,46 +137,20 @@ const BuyTicketsPage = () => {
       </div>
 
       <div className="bookingContent">
-        <TheatreCard
-          theatreName="PVR"
-          theatreAddress="Delhi NCR"
-          theatreAmenities={["Parking", "Concessions", "Restrooms"]}
-          movieName={movieName}
-          selectedDate={selectedDate}
-        />
-        <div className="underlineAssest"></div>
-        <TheatreCard
-          theatreName="PVR"
-          theatreAddress="Delhi NCR"
-          theatreAmenities={["Parking", "Concessions", "Restrooms"]}
-          movieName={movieName}
-          selectedDate={selectedDate}
-        />
-        <div className="underlineAssest"></div>
-        <TheatreCard
-          theatreName="PVR"
-          theatreAddress="Delhi NCR"
-          theatreAmenities={["Parking", "Concessions", "Restrooms"]}
-          movieName={movieName}
-          selectedDate={selectedDate}
-        />
-        <div className="underlineAssest"></div>
-        <TheatreCard
-          theatreName="PVR"
-          theatreAddress="Delhi NCR"
-          theatreAmenities={["Parking", "Concessions", "Restrooms"]}
-          movieName={movieName}
-          selectedDate={selectedDate}
-        />
-        <div className="underlineAssest"></div>
-        <TheatreCard
-          theatreName="PVR"
-          theatreAddress="Delhi NCR"
-          theatreAmenities={["Parking", "Concessions", "Restrooms"]}
-          movieName={movieName}
-          selectedDate={selectedDate}
-        />
+        {theaters?.length > 0 ? (
+          theaters.map((item, index) => (
+            <React.Fragment key={index}>
+              <TheatreCard theater={item} />
+              {index < theaters.length - 1 && (
+                <div className="underlineAssest"></div>
+              )}
+            </React.Fragment>
+          ))
+        ) : (
+          <p>No Shows Available</p>
+        )}
       </div>
+
       <Footer />
     </div>
   );

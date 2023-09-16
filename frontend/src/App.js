@@ -7,13 +7,13 @@ import {
   SignUpPage,
   AddMovie,
   AddTheatre,
+  AddShow,
   CustomerSupport,
 } from "./Routes";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { useSelector } from "react-redux";
 function App() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const user = useSelector((state) => state?.auth?.user?.user);
   return (
     <BrowserRouter>
@@ -43,6 +43,12 @@ function App() {
           path="/addTheatre_admin"
           element={
             user && user.role === "ROLE_ADMIN" ? <AddTheatre /> : <HomePage />
+          }
+        />
+        <Route
+          path="/addShow_admin"
+          element={
+            user && user.role === "ROLE_ADMIN" ? <AddShow /> : <HomePage />
           }
         />
       </Routes>
