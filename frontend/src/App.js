@@ -13,12 +13,14 @@ import {
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { useSelector } from "react-redux";
+import Loader from "./components/Loader/Loader";
 function App() {
   const user = useSelector((state) => state?.auth?.user?.user);
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/test" element={<Loader />} />
         <Route path="/customer-support" element={<CustomerSupport />} />
 
         <Route path="/signup" element={<SignUpPage />} />

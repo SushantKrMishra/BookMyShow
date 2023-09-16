@@ -28,7 +28,7 @@ const PaymentPage = () => {
     const newTotalPrice = ticketPrice + convenienceFees + foodItemsTotal;
 
     setTotalPrice(newTotalPrice);
-  }, [selectedSeats, selectedFoodItems,price]);
+  }, [selectedSeats, selectedFoodItems, price]);
   const handleAddToBill = (foodItem, quantity) => {
     setSelectedFoodItems((prevItems) => {
       const updatedItems = { ...prevItems };
@@ -51,7 +51,7 @@ const PaymentPage = () => {
   };
   const handleCancelDialogBox = () => {
     navigate(
-      `/buytickets/${movieName}/${theatreName}/${date}/${time}/seatbooking`
+      `/buytickets/${movieName}`
     );
   };
   const handleIconClick = () => {
