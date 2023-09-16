@@ -8,72 +8,99 @@ import {
   Paper,
 } from "@mui/material";
 import Header from "../../components/Header/Header";
-
+import axios from "axios";
+import { useSelector } from "react-redux";
 const AddMovie = () => {
   const [formData, setFormData] = useState({
     name: "",
     image: "",
     bannerImage: "",
-    releaseDate: "",
-    duration: "",
+    releasedate: "",
+    duration: 0.0,
     category: "",
-    interestedCount: "",
+    howManyInterested: "",
     aboutTheMovie: "",
-    fewCasts: [""],
-    fewCrew: [""],
+    cast: "",
+    crew: "",
+  });
+  const [subformData, setsubFormData] = useState({
+    cast1Name: "",
+    cast1ImgUrl: "",
+    cast2Name: "",
+    cast2ImgUrl: "",
+    cast3Name: "",
+    cast3ImgUrl: "",
+    crew1Name: "",
+    crew1ImgUrl: "",
+    crew2Name: "",
+    crew2ImgUrl: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const subhandleChange = (e) => {
+    const { name, value } = e.target;
+    setsubFormData({ ...subformData, [name]: value });
+  };
+  const token = useSelector((state) => state.auth.user.token);
+  const handleAddMovie = async () => {
+    const cast1 = `${subformData.cast1Name},${subformData.cast1ImgUrl}`;
+    const cast2 = `${subformData.cast2Name},${subformData.cast2ImgUrl}`;
+    const cast3 = `${subformData.cast3Name},${subformData.cast3ImgUrl}`;
 
-  const handleAddMovie = () => {
-    const filteredCasts = formData.fewCasts.filter(
-      (cast) => cast.trim() !== ""
-    );
-    const filteredCrew = formData.fewCrew.filter((crew) => crew.trim() !== "");
+    const crew1 = `${subformData.crew1Name},${subformData.crew1ImgUrl}`;
+    const crew2 = `${subformData.crew2Name},${subformData.crew2ImgUrl}`;
+
+    const fewCasts = [cast1, cast2, cast3]
+      .filter((cast) => cast !== "")
+      .join("|");
+    const fewCrew = [crew1, crew2].filter((crew) => crew !== "").join("|");
 
     const formattedData = {
       ...formData,
-      fewCasts: filteredCasts,
-      fewCrew: filteredCrew,
+      cast: fewCasts,
+      crew: fewCrew,
     };
-
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     console.log(formattedData);
-
-    setFormData({
-      name: "",
-      image: "",
-      bannerImage: "",
-      releaseDate: "",
-      duration: "",
-      category: "",
-      interestedCount: "",
-      aboutTheMovie: "",
-      fewCasts: [""],
-      fewCrew: [""],
-    });
-  };
-
-  const handleAddCast = () => {
-    setFormData({ ...formData, fewCasts: [...formData.fewCasts, ""] });
-  };
-
-  const handleAddCrew = () => {
-    setFormData({ ...formData, fewCrew: [...formData.fewCrew, ""] });
-  };
-
-  const handleCastChange = (index, value) => {
-    const updatedCasts = [...formData.fewCasts];
-    updatedCasts[index] = value;
-    setFormData({ ...formData, fewCasts: updatedCasts });
-  };
-
-  const handleCrewChange = (index, value) => {
-    const updatedCrew = [...formData.fewCrew];
-    updatedCrew[index] = value;
-    setFormData({ ...formData, fewCrew: updatedCrew });
+    await axios
+      .post("http://16.171.225.190:8080/Movie/add", formattedData, { headers })
+      .then((response) => {
+        console.log("Data sent successfully:", response.data);
+        alert("Data sent successfully");
+        setFormData({
+          name: "",
+          image: "",
+          bannerImage: "",
+          releasedate: "",
+          duration: 0.0,
+          category: "",
+          howManyInterested: "",
+          aboutTheMovie: "",
+          cast: "",
+          crew: "",
+        });
+        setsubFormData({
+          cast1Name: "",
+          cast1ImgUrl: "",
+          cast2Name: "",
+          cast2ImgUrl: "",
+          cast3Name: "",
+          cast3ImgUrl: "",
+          crew1Name: "",
+          crew1ImgUrl: "",
+          crew2Name: "",
+          crew2ImgUrl: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+        alert("Error sending data");
+      });
   };
 
   return (
@@ -121,8 +148,8 @@ const AddMovie = () => {
                   fullWidth
                   label="Release Date"
                   variant="outlined"
-                  name="releaseDate"
-                  value={formData.releaseDate}
+                  name="releasedate"
+                  value={formData.releasedate}
                   onChange={handleChange}
                 />
               </Grid>
@@ -132,6 +159,8 @@ const AddMovie = () => {
                   label="Duration"
                   variant="outlined"
                   name="duration"
+                  type="number"
+                  inputProps={{ step: "any" }}
                   value={formData.duration}
                   onChange={handleChange}
                 />
@@ -151,8 +180,8 @@ const AddMovie = () => {
                   fullWidth
                   label="Interested Count"
                   variant="outlined"
-                  name="interestedCount"
-                  value={formData.interestedCount}
+                  name="howManyInterested"
+                  value={formData.howManyInterested}
                   onChange={handleChange}
                 />
               </Grid>
@@ -172,93 +201,126 @@ const AddMovie = () => {
                 <Typography variant="h6" gutterBottom>
                   Casts
                 </Typography>
-                {formData.fewCasts.map((cast, index) => (
-                  <div key={index} style={{ display: "flex" }}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      label={`Cast ${index + 1} Name`}
+                      label="Cast 1 Name"
                       variant="outlined"
-                      value={cast.split(",")[0]}
-                      onChange={(e) =>
-                        handleCastChange(
-                          index,
-                          `${e.target.value},${
-                            formData.fewCasts[index].split(",")[1]
-                          }`
-                        )
-                      }
-                      style={{ marginBottom: "8px", marginRight: "8px" }}
+                      name="cast1Name"
+                      value={subformData.cast1Name}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
                     />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      label={`Cast ${index + 1} Image URL`}
+                      label="Cast 1 Image URL"
                       variant="outlined"
-                      value={cast.split(",")[1]}
-                      onChange={(e) =>
-                        handleCastChange(
-                          index,
-                          `${formData.fewCasts[index].split(",")[0]},${
-                            e.target.value
-                          }`
-                        )
-                      }
+                      name="cast1ImgUrl"
+                      value={subformData.cast1ImgUrl}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
                     />
-                  </div>
-                ))}
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={handleAddCast}
-                >
-                  Add Cast
-                </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Cast 2 Name"
+                      variant="outlined"
+                      name="cast2Name"
+                      value={subformData.cast2Name}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Cast 2 Image URL"
+                      variant="outlined"
+                      name="cast2ImgUrl"
+                      value={subformData.cast2ImgUrl}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Cast 3 Name"
+                      variant="outlined"
+                      name="cast3Name"
+                      value={subformData.cast3Name}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Cast 3 Image URL"
+                      variant="outlined"
+                      name="cast3ImgUrl"
+                      value={subformData.cast3ImgUrl}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
 
               <Grid item xs={12}>
                 <Typography variant="h6" gutterBottom>
                   Crew
                 </Typography>
-                {formData.fewCrew.map((crew, index) => (
-                  <div key={index} style={{ display: "flex" }}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      label={`Crew ${index + 1} Name`}
+                      label="Crew 1 Name"
                       variant="outlined"
-                      value={crew.split(",")[0]}
-                      onChange={(e) =>
-                        handleCrewChange(
-                          index,
-                          `${e.target.value},${
-                            formData.fewCrew[index].split(",")[1]
-                          }`
-                        )
-                      }
-                      style={{ marginBottom: "8px", marginRight: "8px" }}
-                    />
-                    <TextField
-                      fullWidth
-                      label={`Crew ${index + 1} Image URL`}
-                      variant="outlined"
-                      value={crew.split(",")[1]}
-                      onChange={(e) =>
-                        handleCrewChange(
-                          index,
-                          `${formData.fewCrew[index].split(",")[0]},${
-                            e.target.value
-                          }`
-                        )
-                      }
+                      name="crew1Name"
+                      value={subformData.crew1Name}
+                      onChange={subhandleChange}
                       style={{ marginBottom: "8px" }}
                     />
-                  </div>
-                ))}
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={handleAddCrew}
-                >
-                  Add Crew
-                </Button>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Crew 1 Image URL"
+                      variant="outlined"
+                      name="crew1ImgUrl"
+                      value={subformData.crew1ImgUrl}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Crew 2 Name"
+                      variant="outlined"
+                      name="crew2Name"
+                      value={subformData.crew2Name}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      label="Crew 2 Image URL"
+                      variant="outlined"
+                      name="crew2ImgUrl"
+                      value={subformData.crew2ImgUrl}
+                      onChange={subhandleChange}
+                      style={{ marginBottom: "8px" }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
             <Button

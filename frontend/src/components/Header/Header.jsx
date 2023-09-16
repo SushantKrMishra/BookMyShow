@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Dialog,
   DialogTitle,
@@ -71,8 +71,9 @@ const Header = () => {
     username: "",
     password: "",
   });
+  const { pathname } = useLocation();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state?.auth?.user?.user);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -100,7 +101,11 @@ const Header = () => {
     alert("Login successful");
     setAuthDialogOpen(false);
   };
-
+  useEffect(() => {
+    if (pathname.includes("/buytickets/")) {
+      setDialogOpen(true);
+    }
+  }, [pathname]);
   return (
     <>
       <div className="header">
@@ -163,7 +168,7 @@ const Header = () => {
         </div>
         {isAuthenticated ? (
           <div className="userNameDisplay">
-            <span>welcome {user.name} !</span>
+            <span>Hi, {user.name} !</span>
           </div>
         ) : (
           <div className="authButton" onClick={handleLoginDialog}>
@@ -200,16 +205,15 @@ const Header = () => {
                   <div
                     className="menuOption"
                     onClick={() => {
-                      navigate('/addMovie_admin')
+                      navigate("/addMovie_admin");
                     }}
-                    >
+                  >
                     Add Movie
                   </div>
                   <div
                     className="menuOption"
                     onClick={() => {
-                      navigate('/addTheatre_admin')
-
+                      navigate("/addTheatre_admin");
                     }}
                   >
                     Add Theatre

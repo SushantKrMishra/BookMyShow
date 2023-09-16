@@ -34,17 +34,17 @@ const HomePage = () => {
 
       <SectionHeading text="Recommended Movies" />
       <div className="recommendedMovies">
-        {allMovies &&
-          allMovies.map((movie, index) => (
-            <Card
-              imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:oi-discovery-catalog@@icons@@star-icon-202203010609.png,ox-24,oy-615,ow-29:ote-Ny45LzEwICAzMy41SyBWb3Rlcw%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-70:q-80/et00340111-bucsngjtyp-portrait.jpg"
-              imageAlt="Dream Girl 2"
-              movieName={movie.name}
-              category="Comedy/Drama/Romance"
-              releasedate={movie.releasedate}
-              key={index}
-            />
-          ))}
+        {allMovies && allMovies.length > 0
+          ? allMovies
+              .filter(
+                (movie) =>
+                  movie.category !== "Streaming Events" &&
+                  movie.category !== "Outdoor Events" &&
+                  movie.category !== "Popular Events"
+              )
+              .slice(0, 5)
+              .map((movie, index) => <Card movieData={movie} key={index} />)
+          : null}
       </div>
       <Banner
         imageAlt="ICC Men's Cricket World Cup 2023"
@@ -75,102 +75,30 @@ const HomePage = () => {
       </div>
       <SectionHeading text="Online Streaming Events" />
       <div className="streamingEvents">
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAxIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367009-mcgkcabczp-portrait.jpg"
-          imageAlt="WeMET Speed Dating "
-          movieName="WeMET Speed Dating "
-          category="watch on Zoom"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAxIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367009-mcgkcabczp-portrait.jpg"
-          imageAlt="WeMET Speed Dating "
-          movieName="WeMET Speed Dating "
-          category="watch on Zoom"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAxIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367009-mcgkcabczp-portrait.jpg"
-          imageAlt="WeMET Speed Dating "
-          movieName="WeMET Speed Dating "
-          category="watch on Zoom"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAxIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367009-mcgkcabczp-portrait.jpg"
-          imageAlt="WeMET Speed Dating "
-          movieName="WeMET Speed Dating "
-          category="watch on Zoom"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAxIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367009-mcgkcabczp-portrait.jpg"
-          imageAlt="WeMET Speed Dating "
-          movieName="WeMET Speed Dating "
-          category="watch on Zoom"
-        />
+        {allMovies && allMovies.length > 0
+          ? allMovies
+              .filter((movie) => movie.category === "Streaming Events")
+              .slice(0, 5)
+              .map((movie, index) => <Card movieData={movie} key={index} />)
+          : null}
       </div>
       <SectionHeading text="Outdoor Events" />
       <div className="recommendedMovies">
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAzIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00360944-yrqvntdcpk-portrait.jpg"
-          imageAlt="Mahabali"
-          movieName="Mahabali"
-          category="Shri Ram Centre: Delhi"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAzIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00360944-yrqvntdcpk-portrait.jpg"
-          imageAlt="Mahabali"
-          movieName="Mahabali"
-          category="Shri Ram Centre: Delhi"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAzIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00360944-yrqvntdcpk-portrait.jpg"
-          imageAlt="Mahabali"
-          movieName="Mahabali"
-          category="Shri Ram Centre: Delhi"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAzIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00360944-yrqvntdcpk-portrait.jpg"
-          imageAlt="Mahabali"
-          movieName="Mahabali"
-          category="Shri Ram Centre: Delhi"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-U3VuLCAzIFNlcA%3D%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00360944-yrqvntdcpk-portrait.jpg"
-          imageAlt="Mahabali"
-          movieName="Mahabali"
-          category="Shri Ram Centre: Delhi"
-        />
+        {allMovies && allMovies.length > 0
+          ? allMovies
+              .filter((movie) => movie.category === "Outdoor Events")
+              .slice(0, 5)
+              .map((movie, index) => <Card movieData={movie} key={index} />)
+          : null}
       </div>
       <SectionHeading text="Popular Events" />
       <div className="popularEvents">
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAyNyBPY3Q%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367968-vhcvtcbxdj-portrait.jpg"
-          imageAlt="Kisi Ko Batana Mat By Anubhav Singh Bassi - Delhi"
-          movieName="Kisi Ko Batana Mat By Anubhav Singh - Delhi"
-          category="Talkatora Stadium: Delhi"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAyNyBPY3Q%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367968-vhcvtcbxdj-portrait.jpg"
-          imageAlt="Kisi Ko Batana Mat By Anubhav Singh Bassi - Delhi"
-          movieName="Kisi Ko Batana Mat By Anubhav Singh - Delhi"
-          category="Talkatora Stadium: Delhi"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAyNyBPY3Q%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367968-vhcvtcbxdj-portrait.jpg"
-          imageAlt="Kisi Ko Batana Mat By Anubhav Singh Bassi - Delhi"
-          movieName="Kisi Ko Batana Mat By Anubhav Singh - Delhi"
-          category="Talkatora Stadium: Delhi"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAyNyBPY3Q%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367968-vhcvtcbxdj-portrait.jpg"
-          imageAlt="Kisi Ko Batana Mat By Anubhav Singh Bassi - Delhi"
-          movieName="Kisi Ko Batana Mat By Anubhav Singh - Delhi"
-          category="Talkatora Stadium: Delhi"
-        />
-        <Card
-          imageLink="https://assets-in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:ote-RnJpLCAyNyBPY3Q%3D,ots-29,otc-FFFFFF,oy-612,ox-24:q-80/et00367968-vhcvtcbxdj-portrait.jpg"
-          imageAlt="Kisi Ko Batana Mat By Anubhav Singh Bassi - Delhi"
-          movieName="Kisi Ko Batana Mat By Anubhav Singh - Delhi"
-          category="Talkatora Stadium: Delhi"
-        />
+        {allMovies && allMovies.length > 0
+          ? allMovies
+              .filter((movie) => movie.category === "Popular Events")
+              .slice(0, 5)
+              .map((movie, index) => <Card movieData={movie} key={index} />)
+          : null}
       </div>
       <SectionHeading text="Trending Searches Right Now" />
       <div className="trendingSearch">

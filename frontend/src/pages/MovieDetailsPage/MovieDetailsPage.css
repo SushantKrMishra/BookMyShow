@@ -42,6 +42,9 @@
   cursor: pointer;
   padding: 0 10px;
 }
+.releaseSection-right-clicked{
+  background-color: rgb(47, 114, 47);
+}
 .movieContentType {
   display: flex;
   gap: 1vmax;

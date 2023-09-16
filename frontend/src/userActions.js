@@ -32,7 +32,7 @@ export const loginUser = (username, password) => async (dispatch) => {
     );
     dispatch({
       type: "LoginSuccess",
-      payload: data.user,
+      payload: data,
     });
   } catch (error) {
     dispatch({
