@@ -99,7 +99,11 @@ const Header = () => {
     e.preventDefault();
     await dispatch(loginUser(formData.username, formData.password));
     setIsMenuOpen(false);
-    alert("Login successful");
+    if (isAuthenticated) {
+      alert("Login successful");
+    } else {
+      alert("Invalid Credentials");
+    }
     setAuthDialogOpen(false);
   };
   const { movieName } = useParams();
@@ -350,6 +354,7 @@ const Header = () => {
                   variant="outlined"
                   placeholder="yourUsername"
                   margin="dense"
+                  fullWidth
                   required
                   name="username"
                   value={formData.username}

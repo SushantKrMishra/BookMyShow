@@ -21,7 +21,7 @@ const AddTheatre = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  const token =useSelector((state) => state.auth.user.token)
+  const token = useSelector((state) => state.auth.user.token);
 
   const handleAddTheatre = () => {
     const headers = {
@@ -58,6 +58,7 @@ const AddTheatre = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
+                  required
                   label="Name"
                   variant="outlined"
                   name="name"
@@ -68,6 +69,7 @@ const AddTheatre = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="City"
                   variant="outlined"
                   name="city"
@@ -78,6 +80,7 @@ const AddTheatre = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="Address"
                   variant="outlined"
                   name="address"
