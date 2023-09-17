@@ -117,6 +117,7 @@ const AddMovie = () => {
                 <TextField
                   fullWidth
                   label="Name"
+                  required
                   variant="outlined"
                   name="name"
                   value={formData.name}
@@ -126,6 +127,7 @@ const AddMovie = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="Image URL"
                   variant="outlined"
                   name="image"
@@ -136,6 +138,7 @@ const AddMovie = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="Banner Image URL"
                   variant="outlined"
                   name="bannerImage"
@@ -146,6 +149,7 @@ const AddMovie = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="Release Date"
                   variant="outlined"
                   name="releasedate"
@@ -156,6 +160,7 @@ const AddMovie = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="Duration"
                   variant="outlined"
                   name="duration"
@@ -168,6 +173,7 @@ const AddMovie = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="Category"
                   variant="outlined"
                   name="category"
@@ -178,6 +184,7 @@ const AddMovie = () => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
+                  required
                   label="Interested Count"
                   variant="outlined"
                   name="howManyInterested"
@@ -188,6 +195,7 @@ const AddMovie = () => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
+                  required
                   label="About The Movie"
                   variant="outlined"
                   name="aboutTheMovie"
@@ -205,6 +213,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Cast 1 Name"
                       variant="outlined"
                       name="cast1Name"
@@ -216,6 +225,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Cast 1 Image URL"
                       variant="outlined"
                       name="cast1ImgUrl"
@@ -227,6 +237,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Cast 2 Name"
                       variant="outlined"
                       name="cast2Name"
@@ -238,6 +249,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Cast 2 Image URL"
                       variant="outlined"
                       name="cast2ImgUrl"
@@ -249,6 +261,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Cast 3 Name"
                       variant="outlined"
                       name="cast3Name"
@@ -260,6 +273,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Cast 3 Image URL"
                       variant="outlined"
                       name="cast3ImgUrl"
@@ -279,6 +293,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Crew 1 Name"
                       variant="outlined"
                       name="crew1Name"
@@ -290,6 +305,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Crew 1 Image URL"
                       variant="outlined"
                       name="crew1ImgUrl"
@@ -301,6 +317,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Crew 2 Name"
                       variant="outlined"
                       name="crew2Name"
@@ -312,6 +329,7 @@ const AddMovie = () => {
                   <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
+                      required
                       label="Crew 2 Image URL"
                       variant="outlined"
                       name="crew2ImgUrl"

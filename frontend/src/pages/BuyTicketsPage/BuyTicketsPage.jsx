@@ -4,12 +4,15 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Select from "react-select";
 import TheatreCard from "../../components/TheatreCard/TheatreCard";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 import axios from "axios";
 const BuyTicketsPage = () => {
+  const MIN_LOADING_DURATION = 2300;
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDropDownOption, setSelectedDropDownOption] = useState(null);
   const [dateOptions, setDateOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [theaters, setTheaters] = useState([]);
   const { payload } = useLocation().state || {};
   const dropdownOptions = [
@@ -35,7 +38,7 @@ const BuyTicketsPage = () => {
           showDate: [],
           movie: {},
           theater: {},
-          showIds: [], 
+          showIds: [],
         };
       }
 
@@ -44,7 +47,7 @@ const BuyTicketsPage = () => {
       theatersByName[theaterName].showDate = show.showDate;
       theatersByName[theaterName].movie = show.movie;
       theatersByName[theaterName].theater = show.theater;
-      theatersByName[theaterName].showIds.push(showId); 
+      theatersByName[theaterName].showIds.push(showId);
     });
 
     return Object.values(theatersByName);
@@ -62,6 +65,11 @@ const BuyTicketsPage = () => {
       })
       .catch((error) => {
         console.error("Error fetching theaters:", error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
       });
   };
   const fetchTheatresByDate = () => {
@@ -80,9 +88,15 @@ const BuyTicketsPage = () => {
       })
       .catch((error) => {
         console.error("Error fetching theaters:", error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, MIN_LOADING_DURATION);
       });
   };
   useEffect(() => {
+    setIsLoading(true);
     fetchTheatresbyCity();
   }, [payload]);
 
@@ -103,6 +117,7 @@ const BuyTicketsPage = () => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
+    setIsLoading(true);
     fetchTheatresByDate();
   }, [selectedOption]);
 
@@ -137,8 +152,10 @@ const BuyTicketsPage = () => {
       </div>
 
       <div className="bookingContent">
-        {theaters?.length > 0 ? (
-          theaters.map((item, index) => (
+        {isLoading ? (
+          <Loader />
+        ) : theaters?.length > 0 ? (
+          theaters?.map((item, index) => (
             <React.Fragment key={index}>
               <TheatreCard theater={item} />
               {index < theaters.length - 1 && (

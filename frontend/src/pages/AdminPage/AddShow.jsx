@@ -22,13 +22,16 @@ const AddShow = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const parsedValue = name === 'price' || name === 'multiplayer' || name === 'theaterId' ? parseInt(value, 10) : value;
+    const parsedValue =
+      name === "price" || name === "multiplayer" || name === "theaterId"
+        ? parseInt(value, 10)
+        : value;
     setFormData({
       ...formData,
       [name]: parsedValue,
     });
   };
-  
+
   if (token === undefined) {
     alert("plese Re Login");
     navigate("/");
@@ -68,6 +71,7 @@ const AddShow = () => {
               <TextField
                 fullWidth
                 label="Show Date"
+                required
                 name="showDate"
                 value={formData.showDate}
                 onChange={handleInputChange}
@@ -75,6 +79,7 @@ const AddShow = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                required
                 fullWidth
                 label="Show Time"
                 name="showTime"
@@ -84,6 +89,7 @@ const AddShow = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                required
                 fullWidth
                 label="Price"
                 name="price"
@@ -94,6 +100,7 @@ const AddShow = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                required
                 fullWidth
                 label="Multiplayer"
                 name="multiplayer"
@@ -105,6 +112,7 @@ const AddShow = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
+                required
                 label="Movie Name"
                 name="movieName"
                 value={formData.movieName}
@@ -114,6 +122,7 @@ const AddShow = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
+                required
                 label="Theater ID"
                 name="theaterId"
                 type="number"

@@ -2,16 +2,17 @@ import React, { useState, useEffect } from "react";
 import "./SeatBookingPage.css";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
-
+import Loader from "../../components/Loader/Loader";
 const SeatBookingPage = () => {
   const { movieName, theatreName, date } = useParams();
   const location = useLocation();
   const { id, price, time } = location.state;
-
+  const [isLoading, setIsLoading] = useState(true);
   const [seatData, setSeatData] = useState({});
   const [selectedSeats, setSelectedSeats] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`http://16.171.225.190:8080/show/seats?showId=${id}`, {
         showId: id,
@@ -21,6 +22,9 @@ const SeatBookingPage = () => {
       })
       .catch((error) => {
         console.error("Error fetching theaters:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [id]);
   const toggleSeat = (seatNo) => {
@@ -103,23 +107,27 @@ const SeatBookingPage = () => {
       </div>
       <div className="seat-booking-container">
         <h2>Seat Booking</h2>
-        <div className="seat-grid">
-          {Object.entries(seatData).map(([seatNo, isBooked]) => (
-            <div
-              key={seatNo}
-              className={`seat ${
-                isBooked
-                  ? "booked"
-                  : selectedSeats.includes(seatNo)
-                  ? "selected"
-                  : "available"
-              }`}
-              onClick={() => toggleSeat(seatNo)}
-            >
-              {seatNo}
-            </div>
-          ))}
-        </div>
+        {isLoading ? ( 
+          <Loader />
+        ) : (
+          <div className="seat-grid">
+            {Object.entries(seatData).map(([seatNo, isBooked]) => (
+              <div
+                key={seatNo}
+                className={`seat ${
+                  isBooked
+                    ? "booked"
+                    : selectedSeats.includes(seatNo)
+                    ? "selected"
+                    : "available"
+                }`}
+                onClick={() => toggleSeat(seatNo)}
+              >
+                {seatNo}
+              </div>
+            ))}
+          </div>
+        )}
 
         <img
           src="https://assetscdn1.paytm.com/movies_new/_next/static/media/screen-icon.8dd7f126.svg"

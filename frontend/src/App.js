@@ -9,17 +9,34 @@ import {
   AddTheatre,
   AddShow,
   CustomerSupport,
+  PaymentConfirmation,
+  MyBookingPage,
 } from "./Routes";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { useSelector } from "react-redux";
 function App() {
   const user = useSelector((state) => state?.auth?.user?.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route
+          path="/my-bookings"
+          element={isAuthenticated ? <MyBookingPage /> : <HomePage />}
+        />
         <Route path="/customer-support" element={<CustomerSupport />} />
+        <Route
+          path="/payment-confirmation"
+          element={
+            isAuthenticated && user && user.role === "ROLE_USER" ? (
+              <PaymentConfirmation />
+            ) : (
+              <HomePage />
+            )
+          }
+        />
 
         <Route path="/signup" element={<SignUpPage />} />
 
