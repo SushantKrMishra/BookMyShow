@@ -79,7 +79,7 @@ const Header = () => {
     setFormData({ ...formData, [name]: value });
   };
   const navigate = useNavigate();
-  
+
   const handleCityClick = () => {
     setDialogOpen(true);
   };
@@ -102,7 +102,6 @@ const Header = () => {
     alert("Login successful");
     setAuthDialogOpen(false);
   };
-
   const { movieName } = useParams();
   useEffect(() => {
     if (pathname.includes("/buytickets/")) {
@@ -206,7 +205,7 @@ const Header = () => {
               <div
                 className="menuOption"
                 onClick={() => {
-                  // Handle My Booking History click here
+                  navigate("/my-bookings");
                 }}
               >
                 My Booking History
@@ -351,7 +350,7 @@ const Header = () => {
                   variant="outlined"
                   placeholder="yourUsername"
                   margin="dense"
-                  fullWidth
+                  required
                   name="username"
                   value={formData.username}
                   onChange={handleChange}
@@ -362,6 +361,8 @@ const Header = () => {
                   placeholder="Password"
                   fullWidth
                   name="password"
+                  type="password"
+                  required
                   margin="dense"
                   value={formData.password}
                   onChange={handleChange}

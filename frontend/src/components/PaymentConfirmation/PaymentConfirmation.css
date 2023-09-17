@@ -1,0 +1,16 @@
+.payment-confirmation-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.confirmation-message {
+  font-size: 24px;
+  font-weight: bold;
+  color: green;
+  margin-bottom: 10px;
+}
+
+.redirect-message {
+  font-size: 16px;
+  color: #333;
+}

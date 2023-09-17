@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   Typography,
@@ -6,9 +6,9 @@ import {
   TextareaAutosize,
   Button,
   Snackbar,
-} from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
-import { useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -16,26 +16,35 @@ function Alert(props) {
 
 const CustomerSupport = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
-  const handleSend = () => {
-    // Send the message (You can implement this part as needed)
-    // For demonstration purposes, we'll just show a success message and navigate to '/'
-    setOpenSnackbar(true);
+  const handleSend = async () => {
+    try {
+      await sendMessageToSupport(email, message);
+      setSnackbarSeverity("success");
+      setSnackbarMessage("Message sent successfully!");
+    } catch (error) {
+      setSnackbarSeverity("error");
+      setSnackbarMessage("Failed to send message. Please try again.");
+    } finally {
+      setOpenSnackbar(true);
+    }
   };
 
   const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
-    navigate('/');
+    navigate("/");
   };
 
   return (
-    <Container maxWidth="md" style={{ marginTop: '24px' }}>
+    <Container maxWidth="md" style={{ marginTop: "24px" }}>
       <Typography variant="h4" gutterBottom>
         Customer Support
       </Typography>
@@ -50,15 +59,11 @@ const CustomerSupport = () => {
       <TextareaAutosize
         rows={5}
         placeholder="Enter your message here"
-        style={{ width: '100%', padding: '8px', marginBottom: '16px' }}
+        style={{ width: "100%", padding: "8px", marginBottom: "16px" }}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleSend}
-      >
+      <Button variant="contained" color="primary" onClick={handleSend}>
         Send
       </Button>
       <Snackbar
@@ -66,8 +71,8 @@ const CustomerSupport = () => {
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
       >
-        <Alert onClose={handleCloseSnackbar} severity="success">
-          Message sent successfully!
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+          {snackbarMessage}
         </Alert>
       </Snackbar>
     </Container>
@@ -75,3 +80,12 @@ const CustomerSupport = () => {
 };
 
 export default CustomerSupport;
+
+const sendMessageToSupport = async (email, message) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  if (Math.random() < 0.8) {
+    return;
+  } else {
+    throw new Error("Failed to send message");
+  }
+};

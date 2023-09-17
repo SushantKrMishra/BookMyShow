@@ -8,6 +8,8 @@ import AddMovie from "./pages/AdminPage/AddMovie.jsx";
 import AddTheatre from "./pages/AdminPage/AddTheatre.jsx";
 import AddShow from "./pages/AdminPage/AddShow.jsx";
 import CustomerSupport from "./pages/CustomerSupportPage/CustomerSupport.jsx";
+import PaymentConfirmation from "./components/PaymentConfirmation/PaymentConfirmation";
+import MyBookingPage from './pages/MyBookingPage/MyBookingPage.jsx';
 export {
   HomePage,
   MovieDetailsPage,
@@ -19,4 +21,5 @@ export {
   AddTheatre,
   CustomerSupport,
   AddShow,
+  PaymentConfirmation,MyBookingPage
 };

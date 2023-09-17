@@ -10,12 +10,103 @@ import "./PaymentPage.css";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import FoodCard from "../../layout/FoodCard/FoodCard";
+import { useSelector } from "react-redux";
+import axios from "axios";
 const PaymentPage = () => {
   const [open, setOpen] = useState(true);
   const { selectedSeats, price, id } = useLocation().state;
   const [selectedFoodItems, setSelectedFoodItems] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
+  const user = useSelector((state) => state?.auth?.user?.user);
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+
+  const token = useSelector((state) => state?.auth?.user?.token) || null;
+
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  async function displayRazorpay() {
+    try {
+      const res = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+      );
+
+      if (!res) {
+        alert("Razorpay SDK failed to load. Are you online?");
+        return;
+      }
+
+      const options = {
+        key: "rzp_test_HF3NhaZyzhoJwj",
+        name: "Sagar's Portal",
+        description: "Flight Management",
+        amount: totalPrice * 100,
+        handler: async function (response) {
+          const payload = {
+            allotedSeats: selectedSeats,
+            amount: totalPrice,
+            userId: user.id,
+            showId: id,
+          };
+          await axios
+            .post(
+              `http://16.171.225.190:8080/tickets/book_ticket`,
+
+              payload,
+              { headers }
+            )
+            .then((response) => {
+              console.log("Payment Successfull");
+              navigate("/payment-confirmation");
+            })
+            .catch((error) => {
+              console.error("Error in Payment:", error);
+            });
+        },
+        prefill: {
+          name: "Sagar Gupta",
+          email: "sagar@gmail.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Global Logic",
+        },
+        theme: {
+          color: "#61dafb",
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      console.error("Error loading Razorpay SDK:", error);
+      alert("An error occurred while loading the Razorpay SDK.");
+    }
+  }
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  const handlePayment = () => {
+    if (isAuthenticated) {
+      displayRazorpay();
+    } else {
+      alert("Please Login");
+      navigate(`/buytickets/${movieName}`);
+    }
+  };
   useEffect(() => {
     const ticketPrice = selectedSeats.length * price;
     const convenienceFees = 58;
@@ -50,14 +141,12 @@ const PaymentPage = () => {
     setOpen(!open);
   };
   const handleCancelDialogBox = () => {
-    navigate(
-      `/buytickets/${movieName}`
-    );
+    navigate(`/buytickets/${movieName}`);
   };
   const handleIconClick = () => {
     navigate(`/buytickets/${movieName}`);
   };
-  const { movieName, theatreName, date, time } = useParams();
+  const { movieName, theatreName } = useParams();
   const mealItems = [
     {
       name: "Friends Combo",
@@ -386,7 +475,7 @@ const PaymentPage = () => {
           <div className="finalPrice-container">
             <div className="finalPrice">
               <span>Total: ₹ {totalPrice}</span>
-              <span>Proceed</span>
+              <span onClick={handlePayment}>Proceed</span>
             </div>
           </div>
         </div>
