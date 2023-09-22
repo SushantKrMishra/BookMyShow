@@ -99,13 +99,10 @@ const Header = () => {
     e.preventDefault();
     await dispatch(loginUser(formData.username, formData.password));
     setIsMenuOpen(false);
-    if (isAuthenticated) {
-      alert("Login successful");
-    } else {
-      alert("Invalid Credentials");
-    }
+
     setAuthDialogOpen(false);
   };
+
   const { movieName } = useParams();
   useEffect(() => {
     if (pathname.includes("/buytickets/")) {
