@@ -2,9 +2,9 @@
   width: 15.4vw;
   height: 35vh;
   border: none;
-  border-radius: 10px;
+  border-radius: 16px;
   background-blend-mode: normal, normal, screen, overlay, normal;
-  background-position: center top; /* Adjust the position to show the top portion */
+  background-position: center top; 
   box-shadow: 0px 0px 3px 1px white;
   overflow: hidden;
   margin: 1% 0;

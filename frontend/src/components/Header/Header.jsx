@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import {
   Dialog,
   DialogTitle,
@@ -17,6 +17,8 @@ import {
 } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../userActions";
 const location = [
   {
     link: "https://in.bmscdn.com/m6/images/common-modules/regions/mumbai.png",
@@ -24,7 +26,7 @@ const location = [
   },
   {
     link: "https://in.bmscdn.com/m6/images/common-modules/regions/ncr.png",
-    name: "NCR",
+    name: "Delhi",
   },
   {
     link: "https://in.bmscdn.com/m6/images/common-modules/regions/bang.png",
@@ -64,20 +66,60 @@ const Header = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
-  const [number, setNumber] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+  const { pathname } = useLocation();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state?.auth?.user?.user);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
   const navigate = useNavigate();
+
   const handleCityClick = () => {
     setDialogOpen(true);
   };
-  const handleLogin = () => {
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const handleLoginDialog = () => {
     setAuthDialogOpen(true);
   };
-
   const handleLocationSelect = (selectedLocation) => {
     setCityName(selectedLocation.name);
     setSelectedLocation(selectedLocation);
     setDialogOpen(false);
   };
+  const dispatch = useDispatch();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await dispatch(loginUser(formData.username, formData.password));
+    setIsMenuOpen(false);
+    if (isAuthenticated) {
+      alert("Login successful");
+    } else {
+      alert("Invalid Credentials");
+    }
+    setAuthDialogOpen(false);
+  };
+  const { movieName } = useParams();
+  useEffect(() => {
+    if (pathname.includes("/buytickets/")) {
+      setDialogOpen(true);
+      if (selectedLocation) {
+        const payload = {
+          city: selectedLocation ? selectedLocation?.name : "Delhi",
+          name: movieName,
+        };
+        navigate(`/buytickets/${movieName}`, { state: { payload } });
+        setDialogOpen(false);
+      }
+    }
+  }, [pathname, selectedLocation]);
   return (
     <>
       <div className="header">
@@ -138,17 +180,23 @@ const Header = () => {
             />
           </svg>
         </div>
-        <div className="authButton" onClick={handleLogin}>
-          <span>Sign In</span>
-        </div>
-        <div className="moreMenu">
+        {isAuthenticated ? (
+          <div className="userNameDisplay">
+            <span>Hi, {user.name} !</span>
+          </div>
+        ) : (
+          <div className="authButton" onClick={handleLoginDialog}>
+            <span>Sign In</span>
+          </div>
+        )}
+        <div className="moreMenu" onClick={toggleMenu}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className="w-6 h-6 menuButton"
           >
             <path
               strokeLinecap="round"
@@ -156,6 +204,46 @@ const Header = () => {
               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
             />
           </svg>
+          {isAuthenticated ? (
+            <div className={`menuContainer ${isMenuOpen ? "open" : ""}`}>
+              <div
+                className="menuOption"
+                onClick={() => {
+                  navigate("/my-bookings");
+                }}
+              >
+                My Booking History
+              </div>
+              {user.role === "ROLE_ADMIN" ? (
+                <>
+                  <div
+                    className="menuOption"
+                    onClick={() => {
+                      navigate("/addMovie_admin");
+                    }}
+                  >
+                    Add Movie
+                  </div>
+                  <div
+                    className="menuOption"
+                    onClick={() => {
+                      navigate("/addTheatre_admin");
+                    }}
+                  >
+                    Add Theatre
+                  </div>
+                  <div
+                    className="menuOption"
+                    onClick={() => {
+                      navigate("/addShow_admin");
+                    }}
+                  >
+                    Add Show
+                  </div>
+                </>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="secondNav">
@@ -236,7 +324,7 @@ const Header = () => {
               color="primary"
               startIcon={<FacebookIcon />}
               fullWidth
-              style={{ marginBottom: "8px" }} // Add margin-bottom here
+              style={{ marginBottom: "8px" }}
             >
               Continue with Facebook
             </Button>
@@ -251,24 +339,38 @@ const Header = () => {
             <Divider sx={{ my: 2 }}>OR</Divider>
             <div>
               <Typography variant="body2" style={{ textAlign: "center" }}>
-                Continue with mobile number
+                Continue with your UserName and Password
               </Typography>
               <div
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   marginTop: "10px",
+                  gap: "10px",
                 }}
               >
-                <Typography variant="body2" style={{ marginRight: "10px" }}>
-                  +91
-                </Typography>
                 <TextField
                   variant="outlined"
-                  placeholder="Enter your mobile number"
+                  placeholder="yourUsername"
+                  margin="dense"
                   fullWidth
-                  value={number}
-                  onChange={(e) => setNumber(e.target.value)}
+                  required
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                />
+
+                <TextField
+                  variant="outlined"
+                  placeholder="Password"
+                  fullWidth
+                  name="password"
+                  type="password"
+                  required
+                  margin="dense"
+                  value={formData.password}
+                  onChange={handleChange}
                 />
               </div>
 
@@ -278,8 +380,9 @@ const Header = () => {
                   backgroundColor: "#f84464",
                   marginTop: "10px",
                   width: "100%",
-                  textAlign: "center", // Center-align the button text
+                  textAlign: "center",
                 }}
+                onClick={handleLogin}
               >
                 Login
               </Button>
@@ -293,6 +396,18 @@ const Header = () => {
               <Link href="#" color="textSecondary">
                 Privacy Policy
               </Link>
+            </Typography>
+            <Typography
+              variant="body2"
+              style={{ textAlign: "center", marginTop: "1vmax", color: "grey" }}
+            >
+              Didn't have account?{" "}
+              <span
+                style={{ color: "#f84464", cursor: "pointer" }}
+                onClick={() => navigate("/signup")}
+              >
+                Sign Up
+              </span>
             </Typography>
           </div>
         </DialogContent>
